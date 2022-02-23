@@ -10,7 +10,7 @@ This allows you to edit the Slim 'program', and view its output each time you sa
 
 ## Installation
 ```shell
-$ gem install
+$ bundle install
 ```
 
 ## Running Slim Language Explorer
