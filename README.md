@@ -8,6 +8,18 @@ This git project consists of a small Ruby program that launches Slim, whenever a
 This allows you to edit the Slim 'program', and view its output each time you save it.
 
 
+## Slim Language REPL
+
+In some sense, this is a REPL for the Slim Language.
+
+  1) Start a bash shell and type: `./slim_explorer`
+  2) The contents of <code>template.slim</code> are evaluated and displayed.
+  3) Use the editor of your choice to modify any file, including <code>template.slim</code>
+  4) The contents of <code>template.slim</code> are re-evaluated and re-displayed.
+
+... this continues until you interrupt the process.
+
+
 ## Installation
 ```shell
 $ bundle install
