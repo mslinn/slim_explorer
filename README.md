@@ -20,7 +20,7 @@ The contents of <code>template.slim</code> are evaluated and displayed using the
 
 ... this continues until you interrupt the process.
 
-## Limitaiton
+## Limitation
 The `scope` hash / dictionary / associative array is not reinterpreted whenever those values are changed.
 If that file was made external, perhaps stored as YAML, then whenever its value changed, the change event could trigger a reload of the data file. Pull request, anyone?
 
