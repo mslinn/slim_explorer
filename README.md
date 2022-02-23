@@ -22,7 +22,7 @@ The contents of <code>template.slim</code> are evaluated and displayed using the
 
 ## Limitation
 The `scope` hash / dictionary / key-value store / associative array is not reinterpreted whenever those values are changed.
-If that file was made external, perhaps stored as YAML, then whenever its value changed, the change event could trigger a reload of the data file. Pull request, anyone?
+If that file was made external, perhaps stored as YAML, then whenever its value changed, the change event could trigger a reload of the data file. [Pull request, anyone?](https://github.com/mslinn/slim_explorer/issues/1)
 
 
 ## Installation
