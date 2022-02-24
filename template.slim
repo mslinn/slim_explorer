@@ -13,13 +13,13 @@ doctype html
 html
   head
     title = heading
-html
+body
   h1 = heading
   p = message
 
-ul
-  li: a href="mailto:#{email}" #{name}
-  li style="margin-top: 3px; #{padding}; background-color: #{background_color}; color: #{color};"
-    = 'Green and white slugs ... yuck!'.slugify
+  ul
+    li: a href="mailto:#{email}" #{name}
+    li style="margin-top: 3px; #{padding}; background-color: #{background_color}; color: #{color};"
+      = 'Green and white slugs ... yuck!'.slugify
 
-==boxed 'Help, I am stuck inside this computer!'
+  ==boxed 'Help, I am stuck inside this computer!'
