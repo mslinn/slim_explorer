@@ -6,6 +6,7 @@
 
 require 'listen'
 require 'slim'
+require 'yaml'
 
 # Dynamically constructed attributes
 class Env
@@ -29,36 +30,40 @@ def Warning.warn(msg)
   super msg
 end
 
-def read_yaml
-  require 'yaml'
+# Testing, testing...
+class SlimExplorer
+  def read_yaml
+    hash = YAML.load_file('scope.yaml')
+    Env.new(hash)
+  end
 
-  hash = YAML.load_file('scope.yaml')
-  Env.new(hash)
-end
-
-# rubocop:disable Metrics/MethodLength
-def process_once
-  # puts "\n#{Time.new.localtime.strftime('%H:%M:%S')}"
-  template = Slim::Template.new('template.slim', { 'pretty': true })
-  scope = read_yaml
-  begin
-    File.open('output.html', 'w') do |fo|
-      fo.write(template.render(scope))
-    end
-  rescue StandardError => e
-    if e.message == "undefined method `[]' for nil:NilClass"
-      puts 'The slim template references an undefined variable or has a syntax error'
-    else
-      puts e.message
+  # rubocop:disable Metrics/MethodLength
+  def process_once
+    # puts "\n#{Time.new.localtime.strftime('%H:%M:%S')}"
+    template = Slim::Template.new('template.slim', { 'pretty': true })
+    scope = read_yaml
+    begin
+      File.open('output.html', 'w') do |fo|
+        fo.write(template.render(scope))
+      end
+    rescue StandardError => e
+      if e.message == "undefined method `[]' for nil:NilClass"
+        puts 'The slim template references an undefined variable or has a syntax error'
+      else
+        puts e.message
+      end
     end
   end
-end
-# rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength
 
-
-process_once
-listener = Listen.to('./') do
-  process_once
+  def process
+    process_once
+    listener = Listen.to('./') do
+      process_once
+    end
+    listener.start
+    sleep
+  end
 end
-listener.start
-sleep
+
+SlimExplorer.new.process

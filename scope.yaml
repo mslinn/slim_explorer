@@ -1,4 +1,5 @@
 environment:
- - name: Michael Slinn
+ - email: mslinn@mslinn.com
  - heading: Testing, 1-2-3, Testing ...
  - message: World peace begins with you and me.
+ - name: Michael Slinn

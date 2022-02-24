@@ -1,8 +1,22 @@
-h1
-  = heading
+ruby:
+  require 'slugify'
 
-p
-  = message
+  def self.headline(block)
+    "<h1>#{block}</h1>"
+  end
 
-i
-  = name
+doctype html
+html
+  head
+    title = heading
+html
+  h1 = heading
+  p = message
+
+ul
+  li.first: a href="/user/#{name}" #{name}
+  li: a href="/b" B link
+
+p= 'Blah blah blah'.slugify
+
+==headline 'asdf'.upcase
