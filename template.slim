@@ -1,8 +1,12 @@
 ruby:
   require 'slugify'
 
-  def self.headline(block)
-    "<h1>#{block}</h1>"
+  def self.padding
+    'padding: 0 5px 3px 5px'
+  end
+
+  def self.boxed(contents)
+    "<div style='border: thin solid grey; #{padding};'>#{contents}</div>"
   end
 
 doctype html
@@ -14,9 +18,8 @@ html
   p = message
 
 ul
-  li.first: a href="/user/#{name}" #{name}
-  li: a href="/b" B link
+  li: a href="mailto:#{email}" #{name}
+  li style="margin-top: 3px; #{padding}; background-color: #{background_color}; color: #{color};"
+    = 'Green and white'.slugify
 
-p= 'Blah blah blah'.slugify
-
-==headline 'asdf'.upcase
+==boxed 'Help, I am stuck inside this computer!'
