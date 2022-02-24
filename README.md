@@ -13,7 +13,7 @@ This allows you to edit the Slim 'program', and view its output each time you sa
 In some sense, this is a REPL for the Slim Language.
 
   1) Start a bash shell and type: `./slim_explorer`.
-The contents of <code>template.slim</code> are evaluated and displayed using the key/value store called `scope` in `slim_explorer`.
+The contents of <code>template.slim</code> are evaluated and displayed using the key/values stored in file `scope.yaml`.
   3) Use the editor of your choice to modify any file, including <code>template.slim</code>
   4) The contents of <code>template.slim</code> are re-evaluated and re-displayed.
      If you modify the source code to slim_explorer, the program must be restarted.
