@@ -1,10 +1,6 @@
 # Slim Language Explorer
 
-<video controls autoplay="1" width="100%" preload="auto" class="shadow rounded" style="margin-bottom: 1em;">
-  <source src="https://github.com/mslinn/slim_explorer/raw/master/video/slimDemo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-  Please use another browser to view this video.
-</video>
+https://user-images.githubusercontent.com/485818/155521347-856ca755-cb89-4bc7-97ce-fa69d091cf7a.mp4
 
 [Slim](https://github.com/slim-template/slim#configuring-slim) is a cool way to generate a potentially complex HTML block with a minimum of characters.
 Most often, Slim is thought of as an alternative to Ruby on Rail's ERB, however it is useful in a broad range of contexts.
