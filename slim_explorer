@@ -38,7 +38,7 @@ end
 
 # rubocop:disable Metrics/MethodLength
 def process_once
-  puts "\n#{Time.new.localtime.strftime('%H:%M:%S')}"
+  # puts "\n#{Time.new.localtime.strftime('%H:%M:%S')}"
   template = Slim::Template.new('template.slim', { 'pretty': true })
   scope = read_yaml
   begin
