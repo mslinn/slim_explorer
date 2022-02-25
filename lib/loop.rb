@@ -6,7 +6,7 @@ require 'slim'
 # Main loop
 # See https://www.ruby-toolbox.com/projects/tilt
 class SlimExplorer
-  def initialize(watched_directory = 'data', slim_template = 'template.slim', yaml_file = 'scope.yaml')
+  def initialize(watched_directory: 'data', slim_template: 'template.slim', yaml_file: 'scope.yaml')
     @watched_directory = watched_directory
     @slim_template = slim_template
     @yaml_file = yaml_file
