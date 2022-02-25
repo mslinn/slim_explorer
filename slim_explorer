@@ -6,4 +6,8 @@ require_relative 'lib/data'
 require_relative 'lib/loop'
 require_relative 'lib/warn'
 
-SlimExplorer.new('watched', 'template.slim', 'scope.yaml').explore
+SlimExplorer.new(
+  watched_directory: 'watched',
+  slim_template: 'template.slim',
+  yaml_file: 'scope.yaml'
+).explore
