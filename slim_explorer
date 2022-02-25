@@ -2,68 +2,8 @@
 
 # frozen_string_literal: true
 
-# See https://www.ruby-toolbox.com/projects/tilt
+require_relative 'lib/data'
+require_relative 'lib/loop'
+require_relative 'lib/warn'
 
-require 'listen'
-require 'slim'
-require 'yaml'
-
-# Dynamically constructed attributes
-class Env
-  def initialize(hash)
-    hash.values[0].each do |item|
-      item.each do |key, value|
-        instance_variable_set("@#{key}", value)
-        eigenclass = class << self; self; end
-        eigenclass.class_eval do
-          attr_accessor key
-        end
-      end
-    end
-  end
-end
-
-def Warning.warn(msg)
-  # Suppress 'warning: $SAFE will become a normal global variable in Ruby 3.0'
-  return unless msg !~ /warning: (URI.(un|)escape is obsolete|\$SAFE will become a normal global variable)/
-
-  super msg
-end
-
-# Testing, testing...
-class SlimExplorer
-  def read_yaml
-    hash = YAML.load_file('scope.yaml')
-    Env.new(hash)
-  end
-
-  # rubocop:disable Metrics/MethodLength
-  def process_once
-    # puts "\n#{Time.new.localtime.strftime('%H:%M:%S')}"
-    template = Slim::Template.new('template.slim', { 'pretty': true })
-    scope = read_yaml
-    begin
-      File.open('output.html', 'w') do |fo|
-        fo.write(template.render(scope))
-      end
-    rescue StandardError => e
-      if e.message == "undefined method `[]' for nil:NilClass"
-        puts 'The slim template references an undefined variable or has a syntax error'
-      else
-        puts e.message
-      end
-    end
-  end
-  # rubocop:enable Metrics/MethodLength
-
-  def process
-    process_once
-    listener = Listen.to('./') do
-      process_once
-    end
-    listener.start
-    sleep
-  end
-end
-
-SlimExplorer.new.process
+SlimExplorer.new('watched', 'template.slim', 'scope.yaml').explore
