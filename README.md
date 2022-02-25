@@ -15,17 +15,15 @@ This allows you to edit the Slim 'program', and view its output each time you sa
 In some sense, this is a REPL for the Slim Language.
 
   1) Start a bash shell and type: `./slim_explorer`.
-The contents of <code>template.slim</code> are evaluated and displayed using the keys and values stored in file `scope.yaml`.
-  3) Use the editor of your choice to modify any file, including <code>template.slim</code>
-  4) The contents of <code>template.slim</code> are re-evaluated and re-displayed each time a file in this project directory tree is saved, created or deleted.
+     The contents of `watched/template.slim` are evaluated and displayed using the keys and values stored in file `watched/scope.yaml`.
+  3) Use the editor of your choice to modify any file in the `watched` directory.
+  4) The contents of `watched/template.slim` are re-evaluated and re-displayed each time a file in the `watched` directory is saved, created or deleted.
 
 ... this continues until you interrupt the process.
 
-If you modify the source code, the program must be restarted.
-
 
 ## Live Reload
-The `scope` hash / dictionary / key-value store / associative array is reloaded whenever the contents of `scope.yaml` change.
+The `scope` hash / dictionary / key-value store / associative array is reloaded from `watched/scope.yaml` whenever the contents of the watched directory change.
 
 
 ## Installation
