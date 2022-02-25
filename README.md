@@ -27,9 +27,12 @@ The `scope` hash / dictionary / key-value store / associative array is reloaded 
 
 
 ## Installation
-```shell
-$ bundle install
-```
+  1. [Install full Ruby](https://www.ruby-lang.org/en/documentation/installation/); this should include the development tools.
+  2. Clone this git repo.
+  3. Install dependent gems. From the cloned git repo directory, type:
+     ```shell
+     $ bundle install
+     ```
 
 ## Running Slim Language Explorer
 ```shell
