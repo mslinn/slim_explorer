@@ -37,7 +37,7 @@ class SlimExplorer
     puts "index.html and raw.html in #{@output_directory} will be regenerated each time a file in the watched directory is changed."
     process_once
     listener = Listen.to(@watched_directory, force_polling: true, relative: true) do |modified|
-      puts "  #{modified.join(', ')} was changed"
+      puts "  #{DateTime.now.iso8601}  #{modified.join(', ')} was changed."
       process_once
     end
     listener.start
