@@ -19,6 +19,14 @@ class Env
     end
   end
 
+  # The passed block should call make_property at least once
+  def add_properties(hash)
+    hash.each do |key, value|
+      make_property(key, value)
+    end
+    self
+  end
+
   # Make a new property with the given key and value
   def make_property(key, value)
     instance_variable_set("@#{key}", value)
@@ -26,5 +34,13 @@ class Env
     eigenclass.class_eval do
       attr_accessor key
     end
+    self
+  end
+
+  def include_env_vars_as_properties
+    ENV.each do |key, value|
+      make_property(key, value)
+    end
+    self
   end
 end
