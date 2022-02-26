@@ -4,7 +4,6 @@
 
 require_relative 'lib/data'
 require_relative 'lib/loop'
-require_relative 'lib/warn'
 
 SlimExplorer.new(
   watched_directory: 'watched',
