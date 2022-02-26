@@ -9,32 +9,6 @@ When you are trying to figure out how to express HTML in Slim, however, you inev
 This git project consists of a small Ruby program that launches Slim, whenever a file is modified, created or deleted within the project.
 This allows you to edit the Slim 'program', and view its output each time you save it.
 
-The default Slim template contains the following, which causes the HTML page to reload every 5 seconds:
-
-```
-meta http-equiv="refresh" content="5"
-```
-... which is transformed to:
-```
-<meta content="5" http-equiv="refresh" />
-```
-
-
-## Slim Language REPL
-
-In some sense, this is a REPL for the Slim Language.
-
-  1) Start a bash shell and type: `./slim_explorer`.
-     The contents of `watched/template.slim` are evaluated and displayed using the keys and values stored in file `watched/scope.yaml`.
-  3) Use the editor of your choice to modify any file in the `watched` directory.
-  4) The contents of `watched/template.slim` are re-evaluated and re-displayed each time a file in the `watched` directory is saved, created or deleted.
-
-... this continues until you interrupt the process.
-
-
-## Live Reload
-The `scope` hash / dictionary / key-value store / associative array is reloaded from `watched/scope.yaml` whenever the contents of the watched directory change.
-
 
 ## Installation
   1. [Install full Ruby](https://www.ruby-lang.org/en/documentation/installation/); this should include the development tools.
@@ -44,7 +18,44 @@ The `scope` hash / dictionary / key-value store / associative array is reloaded 
      $ bundle install
      ```
 
-## Running Slim Language Explorer
-```shell
-$ ./slim_explorer
-```
+
+## Slim Language REPL
+
+In some sense, this is a REPL for the Slim Language.
+
+
+### Command-line Mode
+The video above demonstrates command-line mode running in Visual Studio Code.
+
+  1) Start a bash shell and type:
+     ```
+     $ ./slim_explorer
+     ```
+     The contents of `watched/template.slim` are evaluated and stored into `www/raw.html`
+     using the keys and values stored in file `watched/scope.yaml`.
+
+  2) Use the editor of your choice to modify any file in the `watched` directory.
+
+  3) The contents of `watched/template.slim` are re-evaluated and `www/raw.html` is updated each
+    time a file in the `watched` directory is saved, created or deleted.
+    This continues until interrupted.
+
+
+### Web Server Mode
+
+  1) Start a bash shell and type:
+     ```
+     $ ./slim_explorer serve
+     ```
+     The contents of `watched/template.slim` are evaluated and stored into `www/index.html`
+     using the keys and values stored in file `watched/scope.yaml`.
+
+  2) The file `www/index.html` will be generated.
+     Open it in your favorite web browser.
+     This is what it looks like:<br/>
+    <img src="doc/server_mode.png" style="max-width: 600px; margin-top: 1em;" />
+
+  3) Use the editor of your choice to modify any file in the `watched` directory.
+
+  4) The contents of `watched/template.slim` are re-evaluated and `www/index.html` is updated each time a file in
+    the `watched` directory is saved, created or deleted.
