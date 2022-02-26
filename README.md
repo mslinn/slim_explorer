@@ -9,6 +9,16 @@ When you are trying to figure out how to express HTML in Slim, however, you inev
 This git project consists of a small Ruby program that launches Slim, whenever a file is modified, created or deleted within the project.
 This allows you to edit the Slim 'program', and view its output each time you save it.
 
+The default Slim template contains the following, which causes the HTML page to reload every 5 seconds:
+
+```
+meta http-equiv="refresh" content="5"
+```
+... which is transformed to:
+```
+<meta content="5" http-equiv="refresh" />
+```
+
 
 ## Slim Language REPL
 
