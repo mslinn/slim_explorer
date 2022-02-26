@@ -9,41 +9,43 @@ require_relative 'lib/data'
 require_relative 'lib/loop'
 require_relative 'lib/warn'
 
-def explorer
-  SlimExplorer
-    .new(
-      output_directory: 'www',
-      watched_directory: 'watched',
-      slim_template: 'template.slim',
-      yaml_file: 'scope.yaml'
-    )
-    .with_env_vars # Delete this line if you do not want environment name/value pairs in the data
-    .with_properties('rabbit': 'bugs bunny')  # Extra tuple just for fun
-end
-
-def serve
-  server = ::Thin::Server.new('0.0.0.0', 3030) do
-    use Rack::CommonLogger
-    run Rack::Directory.new('www')
+# Top level
+class Main
+  def initialize
+    @explorer = SlimExplorer
+                .new(
+                  output_directory: 'www',
+                  watched_directory: 'watched',
+                  slim_template: 'template.slim',
+                  yaml_file: 'scope.yaml'
+                )
+                .with_env_vars # Delete this line if you do not want environment name/value pairs in the data
+                .with_properties('rabbit': 'bugs bunny') # Extra tuple just for fun
   end
-  server.daemonize
-  server.start
-  Launchy.open('http://localhost:3030/index.html')
-  explorer.explore
-rescue StandardError => e
-  puts e
-  #Process.kill('QUIT', pid)
-end
 
-def command_line
-  explorer.explore
+  def serve
+    dir = @explorer.output_directory
+    server = ::Thin::Server.new('0.0.0.0', 3030) do
+      use Rack::CommonLogger
+      run Rack::Directory.new(dir)
+    end
+    Thread.new { server.start }
+    # Launchy.open('http://localhost:3030/index.html')
+    @explorer.explore
+  rescue StandardError => e
+    puts e
+  end
+
+  def command_line
+    @explorer.explore
+  end
 end
 
 case ARGV[0]
 when nil
-  command_line
+  Main.new.command_line
 when 'serve'
-  serve
+  Main.new.serve
 else
   puts "#{ARGV[0]} is not a recognized action"
 end
