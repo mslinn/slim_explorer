@@ -9,18 +9,12 @@ ruby:
     "<div style='border: thin solid grey; #{padding};'>#{contents}</div>"
   end
 
-doctype html
-html
-  head
-    title = heading
-    meta http-equiv="refresh" content="5"
-  body
-    h1 = heading
-    p = message
+h1 = heading
+p = message
 
-    ul
-      li: a href="mailto:#{email}" #{name}
-      li style="margin-top: 3px; #{padding}; background-color: #{background_color}; color: #{color};"
-        = 'Green and white slugs ... yuck!'.slugify
+ul
+  li: a href="mailto:#{email}" #{name}
+  li style="margin-top: 3px; #{padding}; background-color: #{background_color}; color: #{color};"
+    = 'Green and white slugs ... yuck!'.slugify
 
-    ==boxed 'Help, I am stuck inside this computer!'
+==boxed 'Help, I am stuck inside this computer!'

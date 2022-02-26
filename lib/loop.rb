@@ -1,53 +1,92 @@
 # frozen_string_literal: true
 
+require 'cgi'
+require 'date'
 require 'listen'
+require 'pathname'
 require 'slim'
+require 'time'
 
 # Main loop
 # See https://www.ruby-toolbox.com/projects/tilt
 class SlimExplorer
-  def initialize(watched_directory: 'data', slim_template: 'template.slim', yaml_file: 'scope.yaml')
-    @watched_directory = watched_directory
+  def initialize(
+    output_directory: 'www',
+    watched_directory: 'data',
+    slim_template: 'template.slim',
+    yaml_file: 'scope.yaml'
+  )
     @slim_template = slim_template
     @yaml_file = yaml_file
+
+    @output_directory = Pathname.new(File.expand_path(output_directory))
+    @watched_directory = Pathname.new(File.expand_path(watched_directory))
+    @fq_template = @watched_directory + slim_template
+    @fq_scope = @watched_directory + yaml_file
+
     @with_env_vars = false
     @extra_properties = {}
   end
 
+  def explore
+    puts "Listening to changes to files in #{@watched_directory}."
+    puts "index.html and raw.html in #{@output_directory} will be regenerated each time a file in the watched directory is changed."
+    process_once
+    listener = Listen.to(@watched_directory, force_polling: true, relative: true) do |modified|
+      puts "  #{modified.join(', ')} was changed"
+      process_once
+    end
+    listener.start
+    sleep
+  end
+
+  # Slim error messages can be unhelpful
   def friendly_message(error)
     if error.message == "undefined method `[]' for nil:NilClass"
-      puts "The slim template in #{@watched_directory}/#{@slim_template} references an undefined variable or has a syntax error"
+      puts "The Slim Language template in #{@watched_directory}/#{@slim_template} references an undefined variable or has a syntax error"
     else
       puts error.message
     end
   end
 
+  # Wrap HTML around Slim-generated content to aid the viewer
+  # The page automagically reloads every 5 seconds
+  def index_html(content)
+    <<~HEREDOC
+      <!doctype html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>Slim Explorer Output</title>
+          <meta name="description" content="Slim Explorer output, regenerated on every change.">
+          <meta name="author" content="Slim Explorer">
+          <link rel="icon" href="favicon.png" type="image/png">
+          <link rel="stylesheet" href="stylesheet.css?v=1.0">
+          <meta http-equiv="refresh" content="5">
+        </head>
+        <body>
+          <div class="divider">Generated #{DateTime.now.iso8601}</div>
+          #{content}
+          <div class="divider" style="margin-top: 1em;">HTML Source</div>
+          <pre>#{CGI.escapeHTML content}</pre>
+        </body>
+      </html>
+    HEREDOC
+  end
+
   def process_once
-    fq_template = "#{@watched_directory}/#{@slim_template}"
-    fq_scope = "#{@watched_directory}/#{@yaml_file}"
-    template = Slim::Template.new(fq_template, { 'pretty': true })
-    scope = Env.from_file(fq_scope)
+    template = Slim::Template.new(@fq_template, { 'pretty': true })
+    scope = Env.from_file(@fq_scope)
     scope.include_env_vars_as_properties if @with_env_vars
     scope.add_properties(@extra_properties)
     begin
-      File.open('output.html', 'w') do |fo|
-        fo.write(template.render(scope))
-      end
+      contents = template.render(scope)
+      write_file('raw.html', contents)
+      write_file('index.html', index_html(contents))
     rescue StandardError => e
       friendly_message(e)
     end
-  end
-
-  def explore
-    fq_dir = File.expand_path(@watched_directory)
-    puts "Listening to changes to files in #{fq_dir}"
-    puts 'output.html will be regenerated each time a file is changed.'
-    process_once
-    listener = Listen.to(fq_dir) do
-      process_once
-    end
-    listener.start
-    sleep
   end
 
   def with_env_vars
@@ -58,5 +97,12 @@ class SlimExplorer
   def with_properties(hash)
     @extra_properties = hash
     self
+  end
+
+  def write_file(file_name, contents)
+    # Writes a file with the given name and contents in @output_directory.
+    File.open(@output_directory + file_name, 'w') do |fo|
+      fo.write(contents)
+    end
   end
 end

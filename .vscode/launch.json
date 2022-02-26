@@ -7,17 +7,35 @@
     {
       "cwd": "${workspaceRoot}",
       "name": "Listen for rdebug-ide",
-      "type": "Ruby",
-      "request": "attach",
       "remoteHost": "127.0.0.1",
       "remotePort": "1234",
-      "remoteWorkspaceRoot": "${workspaceRoot}"
+      "remoteWorkspaceRoot": "${workspaceRoot}",
+      "request": "attach",
+      "type": "Ruby",
     },
     {
-      "name": "Debug Slim Explorer",
-      "type": "Ruby",
+      "args": [],
+      "cwd": "${workspaceRoot}",
+      "debuggerPort": "1234",
+      "name": "Slim Explorer command-line",
+      "program": "slim_explorer",
       "request": "launch",
-      "program": "${workspaceRoot}/slim_explorer"
-    }
+      "restart": true,
+      "showDebuggerOutput": true,
+      "stopOnEntry": false,
+      "type": "Ruby",
+    },
+    {
+      "args": [ "serve" ],
+      "cwd": "${workspaceRoot}",
+      "debuggerPort": "1234",
+      "name": "Slim Explorer server",
+      "program": "slim_explorer",
+      "request": "launch",
+      "restart": true,
+      "showDebuggerOutput": true,
+      "stopOnEntry": false,
+      "type": "Ruby",
+    },
   ]
 }

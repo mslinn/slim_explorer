@@ -1,0 +1,14 @@
+pre {
+  border: thin solid #999;
+  background-color: #eee;
+  margin-top: 0;
+  padding: 3px 5px 5px 5px;
+}
+
+.divider {
+  background-color: black;
+  clear: both;
+  color: #ccc;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  padding: 3px 5px 5px 5px;
+}
