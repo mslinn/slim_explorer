@@ -11,7 +11,7 @@
     <meta http-equiv="refresh" content="5">
   </head>
   <body>
-    <div class="divider">Generated 2022-02-26T13:38:44-05:00</div>
+    <div class="divider">Generated 2022-02-26T13:54:12-05:00</div>
     <h1>
   Testing, 1-2-3, Testing ...
 </h1>
@@ -27,7 +27,8 @@
   </li>
 </ul>
 <div style='border: thin solid grey; padding: 0 5px 3px 5px;'>Help, I am stuck inside this computer!</div>
-    <div class="divider" style="margin-top: 1em;">HTML Source</div>
+
+    <div class="divider" style="margin-top: 1em;">Generated HTML Source</div>
     <pre>&lt;h1&gt;
   Testing, 1-2-3, Testing ...
 &lt;/h1&gt;
@@ -43,5 +44,38 @@
   &lt;/li&gt;
 &lt;/ul&gt;
 &lt;div style=&#39;border: thin solid grey; padding: 0 5px 3px 5px;&#39;&gt;Help, I am stuck inside this computer!&lt;/div&gt;</pre>
+
+    <div class="divider" style="margin-top: 1em;">Slim Template</div>
+    <pre>ruby:
+  require &#39;slugify&#39;
+
+  def self.padding
+    &#39;padding: 0 5px 3px 5px&#39;
+  end
+
+  def self.boxed(contents)
+    &quot;&lt;div style=&#39;border: thin solid grey; #{padding};&#39;&gt;#{contents}&lt;/div&gt;&quot;
+  end
+
+h1 = heading
+p = message
+
+ul
+  li: a href=&quot;mailto:#{email}&quot; #{name}
+  li style=&quot;margin-top: 3px; #{padding}; background-color: #{background_color}; color: #{color};&quot;
+    = &#39;Green and white slugs ... yuck!&#39;.slugify
+
+==boxed &#39;Help, I am stuck inside this computer!&#39;
+</pre>
+
+    <div class="divider" style="margin-top: 1em;">YAML data</div>
+    <pre>environment:
+ - email: mslinn@mslinn.com
+ - heading: Testing, 1-2-3, Testing ...
+ - message: World peace begins with you and me.
+ - name: Michael Slinn
+ - color: white
+ - background_color: green
+</pre>
   </body>
 </html>

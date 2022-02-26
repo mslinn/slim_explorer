@@ -26,6 +26,8 @@ class SlimExplorer
 
     @with_env_vars = false
     @extra_properties = {}
+
+    @when_generated = ''
   end
 
   def explore
@@ -66,10 +68,17 @@ class SlimExplorer
           <meta http-equiv="refresh" content="5">
         </head>
         <body>
-          <div class="divider">Generated #{DateTime.now.iso8601}</div>
+          <div class="divider">Generated #{@when_generated}</div>
           #{content}
-          <div class="divider" style="margin-top: 1em;">HTML Source</div>
+
+          <div class="divider" style="margin-top: 1em;">Generated HTML Source</div>
           <pre>#{CGI.escapeHTML content}</pre>
+
+          <div class="divider" style="margin-top: 1em;">Slim Template</div>
+          <pre>#{CGI.escapeHTML File.read(@fq_template)}</pre>
+
+          <div class="divider" style="margin-top: 1em;">YAML data</div>
+          <pre>#{CGI.escapeHTML File.read(@fq_scope)}</pre>
         </body>
       </html>
     HEREDOC
@@ -83,6 +92,8 @@ class SlimExplorer
     begin
       contents = template.render(scope)
       write_file('raw.html', contents)
+
+      @when_generated = DateTime.now.iso8601
       write_file('index.html', index_html(contents))
     rescue StandardError => e
       friendly_message(e)
