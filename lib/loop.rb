@@ -8,7 +8,6 @@ require 'slim'
 require 'time'
 
 # Main loop
-# See https://www.ruby-toolbox.com/projects/tilt
 class SlimExplorer
   attr_reader :output_directory
 
@@ -86,6 +85,7 @@ class SlimExplorer
     HEREDOC
   end
 
+  # See https://www.ruby-toolbox.com/projects/tilt
   def process_once
     template = Slim::Template.new(@fq_template, { 'pretty': true })
     scope = Env.from_file(@fq_scope)
