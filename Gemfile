@@ -2,6 +2,7 @@
 
 source 'https://rubygems.org'
 
+gem 'launchy'
 gem 'listen'
 gem 'slim'
 gem 'slugify'

@@ -51,7 +51,7 @@ The video above demonstrates command-line mode running in Visual Studio Code.
      using the keys and values stored in file `watched/scope.yaml`.
 
   2) The file `www/index.html` will be generated.
-     Open it in your favorite web browser.
+     Open it in your favorite web browser, either from the file, or at [localhost:3030](http://localhost:3030).
      This is what it looks like:<br/>
     <img src="doc/server_mode.png" style="max-width: 600px; margin-top: 1em;" />
 

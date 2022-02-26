@@ -2,6 +2,9 @@
 
 # frozen_string_literal: true
 
+require 'launchy'
+require 'thin'
+
 require_relative 'lib/data'
 require_relative 'lib/loop'
 require_relative 'lib/warn'
@@ -19,21 +22,28 @@ def explorer
 end
 
 def serve
+  server = ::Thin::Server.new('0.0.0.0', 3030) do
+    use Rack::CommonLogger
+    run Rack::Directory.new('www')
+  end
+  server.daemonize
+  server.start
+  Launchy.open('http://localhost:3030/index.html')
   explorer.explore
-  pid = spawn('thin start -C config/thin.yaml')
-rescue StandardError
-  Process.kill('QUIT', pid)
+rescue StandardError => e
+  puts e
+  #Process.kill('QUIT', pid)
 end
 
 def command_line
   explorer.explore
 end
 
-case ARGV[1]
+case ARGV[0]
 when nil
   command_line
 when 'serve'
   serve
 else
-  puts "#{ARGV[1]} is not a recognized action"
+  puts "#{ARGV[0]} is not a recognized action"
 end
