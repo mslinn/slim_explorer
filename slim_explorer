@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-# frozen_string_literal: true
-
 # require 'launchy'
 require 'thin'
 
@@ -14,13 +12,13 @@ class Main
   def initialize
     @explorer = SlimExplorer
                 .new(
-                  output_directory: 'www',
+                  output_directory:  'www',
                   watched_directory: 'watched',
-                  slim_template: 'template.slim',
-                  yaml_file: 'scope.yaml'
+                  slim_template:     'template.slim',
+                  yaml_file:         'scope.yaml'
                 )
                 .with_env_vars # Delete this line if you do not want environment name/value pairs in the data
-                .with_properties('rabbit': 'bugs bunny') # Extra tuple just for fun
+                .with_properties(rabbit: 'bugs bunny') # Extra tuple just for fun
   end
 
   def serve

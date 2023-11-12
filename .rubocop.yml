@@ -1,8 +1,74 @@
-inherit_from: ~/.rubocop.yml
+require:
+  # - rubocop-jekyll
+  - rubocop-md
+  - rubocop-performance
+  - rubocop-rake
+  - rubocop-rspec
+
+AllCops:
+  Exclude:
+    - binstub/**/*
+    - demo/_site/*
+    - vendor/**/*
+    - Gemfile*
+  NewCops: enable
+
+Gemspec/DeprecatedAttributeAssignment:
+  Enabled: false
+
+Gemspec/RequireMFA:
+  Enabled: false
+
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+
+Layout/HashAlignment:
+  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
 
 Layout/LineLength:
   Max: 150
 
+Metrics/AbcSize:
+  Max: 45
+
+Metrics/BlockLength:
+  Exclude:
+    - jekyll_all_collections.gemspec
+  Max: 30
+
+Metrics/CyclomaticComplexity:
+  Max: 25
+
 Metrics/MethodLength:
+  Max: 30
+
+Metrics/PerceivedComplexity:
+  Max: 25
+
+Naming/FileName:
+  Exclude:
+    - Rakefile
+
+RSpec/ExampleLength:
+  Max: 30
+
+RSpec/FilePath:
   Enabled: false
-  Max: 20
+  IgnoreMethods: true
+  SpecSuffixOnly: true
+
+RSpec/IndexedLet:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Max: 15
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
